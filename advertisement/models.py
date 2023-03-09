@@ -11,11 +11,17 @@ class AdvertisementTypeModel(models.Model):
     def __str__(self):
         return self.title
 
+class AdvertisementMediaModel(models.Model):
+    title = models.TextField(null=True, blank=True)
+    file_field = models.FileField(upload_to="media/advertisement/", null=True, blank=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 
 class AdvertisementModel(models.Model):
     title = models.TextField()
-    file_field = models.FileField(upload_to="media/advertisement/", null=True, blank=True)
+    media = models.ManyToManyField(AdvertisementMediaModel, blank=True, related_name="AdvertisementModel_media")
     description = models.TextField(null=True, blank=True)
     advertisement_type = models.ForeignKey(AdvertisementTypeModel, on_delete=models.CASCADE, related_name="AdvertisementModel_AdvertisementModel", blank=True, null=True)
     company = models.ManyToManyField(CompanyDetailsModel, blank=True, related_name="AdvertisementModel_company")

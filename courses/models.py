@@ -6,21 +6,6 @@ from .utils import CourseStatusEnum
 
 # class CourseLanguageModel(models.Model):
     # title = models.CharField(max_length=100)
-class CourseWhatYouWillLearnModel(models.Model):
-    title = models.TextField(null=True, blank=True)
-    description = models.TextField(null=True, blank=True)
-    file_field = models.FileField(upload_to="media/courses", null=True, blank=True)
-    
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True) 
-
-class CourseUserRequirementsModel(models.Model):
-    title = models.TextField(null=True, blank=True)
-    description = models.TextField(null=True, blank=True)
-    file_field = models.FileField(upload_to="media/courses", null=True, blank=True)
-
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
 class CourseMediaModel(models.Model):
     title = models.CharField(max_length=200, null=True, blank=True)
@@ -28,24 +13,42 @@ class CourseMediaModel(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+class CourseWhatYouWillLearnModel(models.Model):
+    title = models.TextField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    # file_field = models.FileField(upload_to="media/courses", null=True, blank=True)
+    media = models.ManyToManyField(CourseMediaModel, related_name="CourseWhatYouWillLearnModel_media", blank=True)
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True) 
+
+class CourseUserRequirementsModel(models.Model):
+    title = models.TextField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    media = models.ManyToManyField(CourseMediaModel, related_name="CourseUserRequirementsModel_media", blank=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
 
 class CourseThisCourseIncludesModel(models.Model):
     title = models.CharField(max_length=200, null=True, blank=True)
-    file_field = models.FileField(upload_to="media/courses", null=True, blank=True)
+    media = models.ManyToManyField(CourseMediaModel, related_name="CourseThisCourseIncludesModel_media", blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 # Quiz options Model
 class CourseQuizOptionsModel(models.Model):
     title = models.TextField(null=True, blank=True)
-    file_field = models.FileField(upload_to="media/courses", null=True, blank=True)
+    media = models.ManyToManyField(CourseMediaModel, related_name="CourseQuizOptionsModel_media", blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 # Quiz Question Model 
 class CourseQuizModel(models.Model):
     question = models.TextField(null=True, blank=True)
-    file_field = models.FileField(upload_to="media/courses", null=True, blank=True)
+    media = models.ManyToManyField(CourseMediaModel, related_name="CourseQuizModel_media", blank=True)
     answer = models.ForeignKey(CourseQuizOptionsModel, on_delete=models.CASCADE, related_name="CourseQuizModel_answer")
     options = models.ManyToManyField(CourseQuizOptionsModel, blank=True, related_name="CourseQuizModel_options")
 
@@ -54,7 +57,7 @@ class CourseQuizModel(models.Model):
 
 class CourseVideoMediaModel(models.Model):
     title = models.CharField(max_length=200, null=True, blank=True)
-    file_field = models.FileField(upload_to="media/courses", null=True, blank=True)
+    media = models.ManyToManyField(CourseMediaModel, related_name="CourseVideoMediaModel_media", blank=True)
     resources = models.FileField(upload_to="media/courses", null=True, blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -86,7 +89,7 @@ class CourseModel(models.Model):
     language = models.CharField(max_length=100,null=True, blank=True)
 
     
-    instructor = models.ManyToManyField(get_user_model(), related_name="CourseModel_instructor", null=True, blank=True)
+    instructor = models.ManyToManyField(get_user_model(), related_name="CourseModel_instructor", blank=True)
     category = models.ForeignKey(CategoryModel, on_delete=models.CASCADE, related_name="CourseModel_category", null=True, blank=True)
     sub_category = models.ForeignKey(SubCategoryModel, on_delete=models.CASCADE, related_name="CourseModel_sub_category", null=True, blank=True)
     what_you_will_learn = models.ManyToManyField(CourseWhatYouWillLearnModel, related_name="CourseModel_what_you_will_learn", blank=True)

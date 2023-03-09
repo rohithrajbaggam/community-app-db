@@ -4,6 +4,15 @@ from company.models import CompanyDetailsModel, CompanyAddressModel
 from .utils import JobModeEnumType
 
 # Create your models here.
+
+class JobApplicationMediaModel(models.Model):
+    title = models.CharField(max_length=200, null=True, blank=True)
+    file_field = models.FileField(upload_to="media/examination", null=True, blank=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
 class JobApplicationDetailModel(models.Model):
     website_link = models.TextField(null=True, blank=True)
     posted_date = models.DateTimeField(null=True, blank=True)
@@ -15,7 +24,7 @@ class JobApplicationDetailModel(models.Model):
 
 
 class JobQualificationModel(models.Model):
-    title = models.CharField(max_length=100)
+    title = models.TextField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -23,10 +32,11 @@ class JobQualificationModel(models.Model):
 
 
 class JobTypeTitleModel(models.Model):
-    title = models.CharField()
+    title = models.TextField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
-    file_field = models.FileField(upload_to="media/jobApplications/", 
-                                  null=True, blank=True)
+    # file_field = models.FileField(upload_to="media/jobApplications/", 
+    #                               null=True, blank=True)
+    media = models.ManyToManyField(JobApplicationMediaModel, related_name="JobTypeTitleModel_media", blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
@@ -34,7 +44,7 @@ class JobTypeTitleModel(models.Model):
         return self.title
 
 class JobApplicationSkillsRequired(models.Model):
-    title = models.CharField(max_length=300)
+    title = models.TextField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     experience_in_years = models.CharField(max_length=200, null=True, blank=True)
 
@@ -42,17 +52,18 @@ class JobApplicationSkillsRequired(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 class JobExperienceLevelModel(models.Model):
-    title = models.CharField(max_length=300)
+    title = models.TextField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
 class JobApplicationModel(models.Model):
-    role = models.TextField()
+    role = models.TextField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
-    file_field = models.FileField(upload_to="media/jobApplications/", 
-                                  null=True, blank=True)
+    media = models.ManyToManyField(JobApplicationMediaModel, related_name="JobApplicationModel_media", blank=True)
+    # file_field = models.FileField(upload_to="media/jobApplications/", 
+    #                               null=True, blank=True)
     attchments = models.FileField(upload_to="media/jobApplications/", 
                                   null=True, blank=True)
     job_type = models.ManyToManyField(JobTypeTitleModel, 

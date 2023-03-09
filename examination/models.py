@@ -5,7 +5,12 @@ from .utils import ExamModeEnumType
 
 # Create your models here.
 
+class ExamMediaModel(models.Model):
+    title = models.CharField(max_length=200, null=True, blank=True)
+    file_field = models.FileField(upload_to="media/examination", null=True, blank=True)
 
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 class ExamApplicationDetailModel(models.Model):
     website_link = models.TextField(null=True, blank=True)
@@ -27,10 +32,11 @@ class ExamQualificationModel(models.Model):
 
 
 class ExamTypeTitleModel(models.Model):
-    title = models.CharField()
+    title = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
-    file_field = models.FileField(upload_to="media/examApplications/", 
-                                  null=True, blank=True)
+    # file_field = models.FileField(upload_to="media/examApplications/", 
+    #                               null=True, blank=True)
+    media = models.ManyToManyField(ExamMediaModel, related_name="ExamTypeTitleModel_media", blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
@@ -61,8 +67,7 @@ class ExamExperienceLevelModel(models.Model):
 class ExamApplicationModel(models.Model):
     title = models.TextField()
     description = models.TextField(null=True, blank=True)
-    file_field = models.FileField(upload_to="media/examApplications/", 
-                                  null=True, blank=True)
+    media = models.ManyToManyField(ExamMediaModel, related_name="ExamApplicationModel_media", blank=True)
     attchments = models.FileField(upload_to="media/examApplications/", 
                                   null=True, blank=True)
     examination_fee = models.CharField(max_length=100, null=True, blank=True)

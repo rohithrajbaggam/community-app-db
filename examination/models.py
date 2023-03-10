@@ -9,7 +9,7 @@ class ExamMediaModel(models.Model):
     title = models.CharField(max_length=200, null=True, blank=True)
     file_field = models.FileField(upload_to="media/examination", null=True, blank=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
 class ExamApplicationDetailModel(models.Model):
@@ -18,7 +18,7 @@ class ExamApplicationDetailModel(models.Model):
     last_date = models.DateTimeField(null=True, blank=True)
     drive_date = models.DateTimeField(null=True, blank=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
 
@@ -27,7 +27,7 @@ class ExamQualificationModel(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(null=True, blank=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
 
@@ -37,7 +37,7 @@ class ExamTypeTitleModel(models.Model):
     # file_field = models.FileField(upload_to="media/examApplications/", 
     #                               null=True, blank=True)
     media = models.ManyToManyField(ExamMediaModel, related_name="ExamTypeTitleModel_media", blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
@@ -48,7 +48,7 @@ class ExamApplicationSkillsRequired(models.Model):
     description = models.TextField(null=True, blank=True)
     experience_in_years = models.CharField(max_length=200, null=True, blank=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -58,7 +58,7 @@ class ExamExperienceLevelModel(models.Model):
     title = models.CharField(max_length=300)
     description = models.TextField(null=True, blank=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -110,7 +110,7 @@ class ExamApplicationModel(models.Model):
                     related_name="ExamApplicationModel_sub_category", 
                     null=True, blank=True)
     
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):

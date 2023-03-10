@@ -11,7 +11,7 @@ class CourseMediaModel(models.Model):
     title = models.CharField(max_length=200, null=True, blank=True)
     file_field = models.FileField(upload_to="media/courses", null=True, blank=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 class CourseWhatYouWillLearnModel(models.Model):
     title = models.TextField(null=True, blank=True)
@@ -19,7 +19,7 @@ class CourseWhatYouWillLearnModel(models.Model):
     # file_field = models.FileField(upload_to="media/courses", null=True, blank=True)
     media = models.ManyToManyField(CourseMediaModel, related_name="CourseWhatYouWillLearnModel_media", blank=True)
     
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True) 
 
 class CourseUserRequirementsModel(models.Model):
@@ -27,7 +27,7 @@ class CourseUserRequirementsModel(models.Model):
     description = models.TextField(null=True, blank=True)
     media = models.ManyToManyField(CourseMediaModel, related_name="CourseUserRequirementsModel_media", blank=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
 
@@ -36,14 +36,14 @@ class CourseThisCourseIncludesModel(models.Model):
     title = models.CharField(max_length=200, null=True, blank=True)
     media = models.ManyToManyField(CourseMediaModel, related_name="CourseThisCourseIncludesModel_media", blank=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 # Quiz options Model
 class CourseQuizOptionsModel(models.Model):
     title = models.TextField(null=True, blank=True)
     media = models.ManyToManyField(CourseMediaModel, related_name="CourseQuizOptionsModel_media", blank=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 # Quiz Question Model 
 class CourseQuizModel(models.Model):
@@ -52,7 +52,7 @@ class CourseQuizModel(models.Model):
     answer = models.ForeignKey(CourseQuizOptionsModel, on_delete=models.CASCADE, related_name="CourseQuizModel_answer")
     options = models.ManyToManyField(CourseQuizOptionsModel, blank=True, related_name="CourseQuizModel_options")
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
 class CourseVideoMediaModel(models.Model):
@@ -60,14 +60,14 @@ class CourseVideoMediaModel(models.Model):
     media = models.ManyToManyField(CourseMediaModel, related_name="CourseVideoMediaModel_media", blank=True)
     resources = models.FileField(upload_to="media/courses", null=True, blank=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
 class CourseSectionContentModel(models.Model):
     quiz = models.ForeignKey(CourseQuizModel, related_name="CourseSectionContentModel_quiz", on_delete=models.CASCADE, null=True, blank=True)
     video = models.ForeignKey(CourseVideoMediaModel, related_name="CourseSectionContentModel_video", on_delete=models.CASCADE, null=True, blank=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
 
@@ -77,7 +77,7 @@ class CourseSectionModel(models.Model):
     # media_list = models.ManyToManyField(CourseVideoMediaModel, related_name="CourseSessionModel_media_list", blank=True)
     content = models.ManyToManyField(CourseSectionContentModel, related_name="CourseSectionModel_content", blank=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
 class CourseModel(models.Model):
@@ -98,7 +98,7 @@ class CourseModel(models.Model):
     course_sections = models.ManyToManyField(CourseSectionModel, related_name="CourseModel_course_sections", blank=True)
 
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
     
 

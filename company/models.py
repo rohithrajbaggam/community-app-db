@@ -11,7 +11,7 @@ class CompanyAddressModel(models.Model):
     state = models.CharField(max_length=500, null=True, blank=True)
     country = models.CharField(max_length=500, null=True, blank=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
 
@@ -25,7 +25,7 @@ class CompanyContactInfoModel(models.Model):
     facebook = models.CharField(max_length=200, null=True, blank=True)
     instagram = models.CharField(max_length=200, null=True, blank=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
 
@@ -39,7 +39,7 @@ class CompanyManagerInfoModel(models.Model):
     whatsapp = models.CharField(max_length=100, null=True, blank=True)
     linkedin = models.CharField(max_length=200, null=True, blank=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -49,7 +49,7 @@ class companyMediaModel(models.Model):
     title = models.TextField(null=True, blank=True)
     file_field = models.FileField(upload_to="media/advertisement/", null=True, blank=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
 class CompanyDetailsModel(models.Model):
@@ -61,7 +61,7 @@ class CompanyDetailsModel(models.Model):
     manager_info = models.ManyToManyField(CompanyManagerInfoModel, blank=True, related_name="CompanyDetailsModel_manager_info")
     company_website = models.CharField(max_length=200, null=True, blank=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):

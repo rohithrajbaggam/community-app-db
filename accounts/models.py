@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from uuid import uuid1 
+from django.contrib.auth import get_user_model
 # Create your models here.
 
 class CustomUserManager(BaseUserManager):
@@ -38,9 +39,11 @@ class CustomUserManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields) 
 
 
+# from django.contrib.auth.models import User 
 class UserModel(AbstractBaseUser, PermissionsMixin):
     id = models.UUIDField(primary_key=True, default=uuid1(), editable=False)
     email = models.EmailField(unique=True)
+    username = models.CharField(max_length=200, null=True, blank=True)
     phone_number = models.CharField(max_length=20, null=True, blank=True)
     
     # Permissions
@@ -60,6 +63,16 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+
+class EmailOtpVerifyModel(models.Model):
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name="EmailOtpVerifyModel_user")
+    email = models.CharField(max_length=200, null=True, blank=True)
+    otp = models.CharField(max_length=100, null=True, blank=True)
+    is_active = models.BooleanField(default=True)
+
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
+    updated_at = models.DateTimeField(auto_now=True)
 
 
 

@@ -3,7 +3,7 @@ from enum import Enum
 class UserStatusEnumType(Enum):
     NOSTARTED = "NOSTARTED"
     INPROGRESS = "INPROGRESS"
-    INCOMPELETED = "INCOMPELETED"
+    INCOMPELETED = "COMPELETED"
 
     @classmethod
     def choices(cls):

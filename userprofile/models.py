@@ -11,7 +11,7 @@ class UserAddressModel(models.Model):
     state = models.CharField(max_length=500, null=True, blank=True)
     country = models.CharField(max_length=500, null=True, blank=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
 
@@ -23,7 +23,7 @@ class UserEducationDetailsModel(models.Model):
     end_date = models.DateField(null=True, blank=True)
     is_pursuing = models.BooleanField(default=False)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
 class UserExperienceDetailsModel(models.Model):
@@ -35,7 +35,7 @@ class UserExperienceDetailsModel(models.Model):
     end_date = models.DateField(null=True, blank=True)
     currently_working = models.BooleanField(default=False)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
 class UserContactInfoModel(models.Model):
@@ -47,18 +47,18 @@ class UserContactInfoModel(models.Model):
     facebook = models.CharField(max_length=200, null=True, blank=True)
     instagram = models.CharField(max_length=200, null=True, blank=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
 class UserResumeModel(models.Model):
     file_field = models.FileField(upload_to="media/user_profile/resumes/")
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
 class UserProfileModel(models.Model):
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE, related_name="UserProfileModel_user")
 
-    profile_picture = models.FileField(upload_to="media/user_profile/resumes/")
+    profile_picture = models.FileField(upload_to="media/user_profile/resumes/", null=True, blank=True)
     first_name = models.CharField(max_length=100, null=True, blank=True)
     last_name = models.CharField(max_length=100, null=True, blank=True)
     bio = models.TextField(null=True, blank=True)
@@ -69,9 +69,9 @@ class UserProfileModel(models.Model):
     address = models.ManyToManyField(UserAddressModel, related_name="UserProfileModel_address", blank=True)
     education = models.ManyToManyField(UserEducationDetailsModel, related_name="UserProfileModel_education", blank=True)
     experiences = models.ManyToManyField(UserExperienceDetailsModel, related_name="UserProfileModel_experiences", blank=True)
-    contact_info = models.ForeignKey(UserContactInfoModel, on_delete=models.CASCADE, related_name="UserProfileModel_contact_info", blank=True)
+    contact_info = models.ManyToManyField(UserContactInfoModel, related_name="UserProfileModel_contact_info", blank=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -79,7 +79,7 @@ class UserProfileModel(models.Model):
 
 class UserPostMediaModel(models.Model):
     file_field = models.FileField(upload_to="media/user-posts/", null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
 class UserPostModel(models.Model):
@@ -91,7 +91,7 @@ class UserPostModel(models.Model):
     sub_category = models.ForeignKey(SubCategoryModel, on_delete=models.CASCADE, related_name="UserPostModel_sub_category", null=True, blank=True)
     likes = models.ManyToManyField(get_user_model(), related_name="UserPostModel_likes")
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):

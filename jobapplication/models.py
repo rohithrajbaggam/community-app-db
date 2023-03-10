@@ -9,7 +9,7 @@ class JobApplicationMediaModel(models.Model):
     title = models.CharField(max_length=200, null=True, blank=True)
     file_field = models.FileField(upload_to="media/examination", null=True, blank=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
 
@@ -19,7 +19,7 @@ class JobApplicationDetailModel(models.Model):
     last_date = models.DateTimeField(null=True, blank=True)
     drive_date = models.DateTimeField(null=True, blank=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
 
@@ -27,7 +27,7 @@ class JobQualificationModel(models.Model):
     title = models.TextField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
 
@@ -37,7 +37,8 @@ class JobTypeTitleModel(models.Model):
     # file_field = models.FileField(upload_to="media/jobApplications/", 
     #                               null=True, blank=True)
     media = models.ManyToManyField(JobApplicationMediaModel, related_name="JobTypeTitleModel_media", blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
@@ -48,14 +49,14 @@ class JobApplicationSkillsRequired(models.Model):
     description = models.TextField(null=True, blank=True)
     experience_in_years = models.CharField(max_length=200, null=True, blank=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
 class JobExperienceLevelModel(models.Model):
     title = models.TextField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
 class JobApplicationModel(models.Model):
@@ -64,6 +65,7 @@ class JobApplicationModel(models.Model):
     media = models.ManyToManyField(JobApplicationMediaModel, related_name="JobApplicationModel_media", blank=True)
     # file_field = models.FileField(upload_to="media/jobApplications/", 
     #                               null=True, blank=True)
+    package = models.CharField(max_length=100, null=True, blank=True)
     attchments = models.FileField(upload_to="media/jobApplications/", 
                                   null=True, blank=True)
     job_type = models.ManyToManyField(JobTypeTitleModel, 
@@ -107,7 +109,7 @@ class JobApplicationModel(models.Model):
                     related_name="JobApplicationModel_sub_category", 
                     null=True, blank=True)
     
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
     
 

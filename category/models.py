@@ -5,7 +5,7 @@ class CategoryMediaModel(models.Model):
     title = models.TextField(null=True, blank=True)
     file_field = models.FileField(upload_to="media/category/", null=True, blank=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
 class CategoryModel(models.Model):
@@ -13,7 +13,7 @@ class CategoryModel(models.Model):
     description = models.TextField(null=True, blank=True)
     media = models.ManyToManyField(CategoryMediaModel, blank=True, related_name="CategoryModel_media")
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
 class SubCategoryModel(models.Model):
@@ -22,6 +22,6 @@ class SubCategoryModel(models.Model):
     description = models.TextField(null=True, blank=True)
     media = models.ManyToManyField(CategoryMediaModel, blank=True, related_name="SubCategoryModel_media")
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 

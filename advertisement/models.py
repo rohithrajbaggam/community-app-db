@@ -15,7 +15,7 @@ class AdvertisementMediaModel(models.Model):
     title = models.TextField(null=True, blank=True)
     file_field = models.FileField(upload_to="media/advertisement/", null=True, blank=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
 
@@ -23,12 +23,14 @@ class AdvertisementModel(models.Model):
     title = models.TextField()
     media = models.ManyToManyField(AdvertisementMediaModel, blank=True, related_name="AdvertisementModel_media")
     description = models.TextField(null=True, blank=True)
+    isThirdparty = models.BooleanField(default=True)
+    ispaid = models.BooleanField(default=True)
     advertisement_type = models.ForeignKey(AdvertisementTypeModel, on_delete=models.CASCADE, related_name="AdvertisementModel_AdvertisementModel", blank=True, null=True)
     company = models.ManyToManyField(CompanyDetailsModel, blank=True, related_name="AdvertisementModel_company")
     category = models.ForeignKey(CategoryModel, on_delete=models.CASCADE, related_name="AdvertisementModel_category", null=True, blank=True)
     sub_category = models.ForeignKey(SubCategoryModel, on_delete=models.CASCADE, related_name="AdvertisementModel_sub_category", null=True, blank=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):

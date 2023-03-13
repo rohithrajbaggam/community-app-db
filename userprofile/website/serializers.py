@@ -1,5 +1,17 @@
 from rest_framework import serializers
-from userprofile.models import UserProfileModel, UserResumeModel, UserContactInfoModel, UserExperienceDetailsModel, UserEducationDetailsModel, UserAddressModel
+from userprofile.models import UserProfileModel, UserResumeModel, UserContactInfoModel, UserExperienceDetailsModel, UserEducationDetailsModel, UserAddressModel, UserCertificatesModel
+
+# Certificates serializer
+class UserCertificatesSerializer(serializers.ModelSerializer):
+    class Meta:
+        models = UserCertificatesModel
+        fields = "__all__" 
+
+    def create(self, validated_data):
+        query = UserCertificatesModel.objects.create(**validated_data)
+        userprofile = UserProfileModel.objects.get(user=self.context["request"].user)
+        userprofile.certificates.add(query.pk)
+        return validated_data
 
 # Resume serializer
 class UserResumeModelSerializer(serializers.ModelSerializer):
@@ -70,10 +82,18 @@ class UserProfileListSerializer(serializers.ModelSerializer):
     education = serializers.SerializerMethodField(read_only=True)
     experiences = serializers.SerializerMethodField(read_only=True)
     contact_info = serializers.SerializerMethodField(read_only=True)
+    certificates = serializers.SerializerMethodField(read_only=True)
     
     class Meta:
         model = UserProfileModel
         fields = "__all__"
+
+    def get_certificates(self, obj):
+        try:
+            data = UserCertificatesSerializer(obj.certificates.all(), many=True).data 
+        except:
+            data = []
+        return data
 
     def get_contact_info(self, obj):
         try:
@@ -116,7 +136,7 @@ class UserProfileCreateSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = UserProfileModel
-        exclude = ("resume", "address", "education", "experiences", "contact_info")
+        exclude = ("resume", "address", "education", "experiences", "contact_info", "certificates")
 
     def create(self, validated_data):
         # user = User

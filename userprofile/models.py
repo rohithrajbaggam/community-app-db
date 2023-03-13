@@ -50,8 +50,20 @@ class UserContactInfoModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
+class UserCertificatesModel(models.Model):
+    title = models.TextField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    file_field = models.FileField(upload_to="media/user_profile/certificate/", null=True, blank=True)
+    start_date = models.DateField(null=True, blank=True)
+    end_date = models.DateField(null=True, blank=True)
+
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+
 class UserResumeModel(models.Model):
-    file_field = models.FileField(upload_to="media/user_profile/resumes/")
+    file_field = models.FileField(upload_to="media/user_profile/resumes/", blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -70,6 +82,7 @@ class UserProfileModel(models.Model):
     education = models.ManyToManyField(UserEducationDetailsModel, related_name="UserProfileModel_education", blank=True)
     experiences = models.ManyToManyField(UserExperienceDetailsModel, related_name="UserProfileModel_experiences", blank=True)
     contact_info = models.ManyToManyField(UserContactInfoModel, related_name="UserProfileModel_contact_info", blank=True)
+    certificates = models.ManyToManyField(UserCertificatesModel, related_name="UserProfileModel_certificates", blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)

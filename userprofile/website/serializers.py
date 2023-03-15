@@ -1,10 +1,63 @@
 from rest_framework import serializers
-from userprofile.models import UserProfileModel, UserResumeModel, UserContactInfoModel, UserExperienceDetailsModel, UserEducationDetailsModel, UserAddressModel, UserCertificatesModel
+from userprofile.models import UserProfileModel, UserResumeModel, UserContactInfoModel, UserExperienceDetailsModel, UserEducationDetailsModel, UserAddressModel, UserCertificatesModel, UserPostModel, UserPostMediaModel
+from django.contrib.auth import get_user_model
+
+class UserPostMediaModelListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserPostMediaModel
+        fields = "__all__"
+
+class UserPostModelImageSerializer(serializers.ModelSerializer):
+    media = serializers.SerializerMethodField(read_only=True)
+    class Meta:
+        model = UserPostModel
+        fields = "__all__"
+
+    def get_media(self, obj):
+        try:
+            media =UserPostMediaModelListSerializer(obj.media.all(), many=True).data 
+        except:
+            media = [ ]
+        return media
+
+class UserPostModelCreateSerializer(serializers.ModelSerializer):
+    user = serializers.PrimaryKeyRelatedField(read_only=True)
+    likes = serializers.SerializerMethodField(read_only=True)
+    media = serializers.SerializerMethodField(read_only=True)
+    post_media = serializers.FileField()
+
+    class Meta:
+        model = UserPostModel
+        fields = "__all__"
+    
+    def create(self, validated_data):
+        user = get_user_model().objects.get(email = self.context["request"].user.email)
+        user_post = UserPostModel.objects.create( 
+            user = user,
+            title = validated_data["title"],
+            description = validated_data["description"],
+            category = validated_data["category"],
+            sub_category = validated_data["sub_category"])
+        post_media_list = self.context["request"].data.getlist("post_media")
+        if len(post_media_list) > 0:
+            for i in post_media_list:
+                instance = UserPostMediaModel.objects.create( 
+                    file_field = i 
+                )
+                user_post.media.add(instance.pk)
+                user_post.save()
+        return validated_data
+    
+    def get_likes(self, obj):
+        return 1
+    
+    def get_media(self, obj):
+        return 1
 
 # Certificates serializer
 class UserCertificatesSerializer(serializers.ModelSerializer):
     class Meta:
-        models = UserCertificatesModel
+        model = UserCertificatesModel
         fields = "__all__" 
 
     def create(self, validated_data):

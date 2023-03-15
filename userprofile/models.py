@@ -102,7 +102,7 @@ class UserPostModel(models.Model):
     media = models.ManyToManyField(UserPostMediaModel, related_name="UserPostModel_media", blank=True)
     category = models.ForeignKey(CategoryModel, on_delete=models.CASCADE, related_name="UserPostModel_category", null=True, blank=True)
     sub_category = models.ForeignKey(SubCategoryModel, on_delete=models.CASCADE, related_name="UserPostModel_sub_category", null=True, blank=True)
-    likes = models.ManyToManyField(get_user_model(), related_name="UserPostModel_likes")
+    likes = models.ManyToManyField(get_user_model(), related_name="UserPostModel_likes", blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)

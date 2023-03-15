@@ -1,8 +1,15 @@
-from rest_framework import generics, status, permissions, authentication
+from rest_framework import generics, status, permissions, authentication, views
 from rest_framework.response import Response
 from .serializers import UserRegistrationSerializer, ForgotPasswordSendEmailOtpVerifySerializer, ForgotPasswordEmailOTPVerifySerializer, ChangePasswordWithEmailVerificationSerializer, ChangePasswordWithOldPasswordSerializer
 from django.contrib.auth import get_user_model
 from accounts.models import EmailOtpVerifyModel
+
+class DummyAPIView(views.APIView):
+    def get(self, request):
+        data = {
+            "message" : "Test Dummny API"
+        }
+        return Response(data)
 
 class UserRegistrationAPIView(generics.GenericAPIView):
     queryset = get_user_model().objects.all()

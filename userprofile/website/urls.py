@@ -1,4 +1,4 @@
-from .views import UserProfileGenericAPIView, UserResumeModelCreateAPIView, UserResumeModelUpdateAPIView, UserAddressModelCreateAPIView, UserAddressModelUpdateAPIView, UserEducationDetailsModelCreateAPIView, UserEducationDetailsModelUpdateAPIView, UserExperienceDetailsModelCreateAPIView, UserExperienceDetailsModelUpdateAPIView, UserContactInfoModelCreateAPIView, UserContactInfoModelUpdateAPIView, UserCertificatesModelUpdateAPIView, UserCertificatesModelCreateAPIView
+from .views import UserProfileGenericAPIView, UserResumeModelCreateAPIView, UserResumeModelUpdateAPIView, UserAddressModelCreateAPIView, UserAddressModelUpdateAPIView, UserEducationDetailsModelCreateAPIView, UserEducationDetailsModelUpdateAPIView, UserExperienceDetailsModelCreateAPIView, UserExperienceDetailsModelUpdateAPIView, UserContactInfoModelCreateAPIView, UserContactInfoModelUpdateAPIView, UserCertificatesModelUpdateAPIView, UserCertificatesModelCreateAPIView, UserPostModelCreateAPIView, UserPostModelListAPIView, UserPostModelListAPIView, UserPostModelHomePageListAPIView
 from django.urls import path 
 
 urlpatterns = [
@@ -20,8 +20,10 @@ urlpatterns = [
     path("user-contact-info/<id>/", UserContactInfoModelUpdateAPIView.as_view(), name="UserContactInfoModelUpdateAPIView"),
 
     path("user-certificate/", UserCertificatesModelCreateAPIView.as_view(), name="UserCertificatesModelCreateAPIView"),
-    path("user-certificate/<id>/", UserCertificatesModelUpdateAPIView.as_view(), name="UserCertificatesModelUpdateAPIView")
+    path("user-certificate/<id>/", UserCertificatesModelUpdateAPIView.as_view(), name="UserCertificatesModelUpdateAPIView"),
 
-
-    
+    path("user-post-create-api/", UserPostModelCreateAPIView.as_view(), name="UserPostModelCreateAPIView"),
+    path("user-post-list-api/", UserPostModelListAPIView.as_view(), name="UserPostModelListAPIView"),
+    path("user-post-list-homepage/", UserPostModelHomePageListAPIView.as_view(), name="UserPostModelHomePageListAPIView")
+        
 ]

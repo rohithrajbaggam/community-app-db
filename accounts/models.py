@@ -8,6 +8,7 @@ class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         """
         Creates and saves a User with the given email and password.
+        This Create Method is regular user, Or Website register method
         """
         if not email:
             raise ValueError('The Email field must be set')
